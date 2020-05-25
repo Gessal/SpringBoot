@@ -1,5 +1,7 @@
 package springBoot.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import springBoot.model.User;
 import springBoot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,8 @@ public class UserController {
 
     @GetMapping("/user")
     public String loginPage(ModelMap model) {
-        User user = service.get(1L);
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = service.getByName(userDetails.getUsername());
         model.addAttribute("user", user);
         return "user";
     }
