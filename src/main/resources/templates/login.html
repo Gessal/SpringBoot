@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<div sec:authorize="isAnonymous()">
+    <form method="post" action="/login">
+        <input name="j_username"/>
+        <input name="j_password"/>
+        <input type="submit"/>
+    </form>
+</div>
+<div sec:authorize="isAuthenticated()">
+    <p>Вы уже авторизованы</p>
+    <a href="/logout">Logout</a>
+</div>
+</body>
+</html>

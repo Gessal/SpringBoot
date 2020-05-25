@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User</title>
+</head>
+<body>
+<table>
+    <tr> <td>Пользователь:</td> <td th:text="${user.getUsername()}">"</td></tr>
+    <tr> <td>Пароль:</td> <td th:text="${user.getPassword()}">"</td></tr>
+    <tr> <td>Имя:</td> <td th:text="${user.getName()}">"</td></tr>
+    <tr> <td>Фамилия:</td> <td th:text="${user.getSurname()}">"</td></tr>
+    <tr> <td>Возраст:</td> <td th:text="${user.getAge()}">"</td></tr>
+    <tr> <td>Активен:</td>
+        <td>
+            <div th:if="${user.getEnabled()} == 0">Нет</div>
+            <div th:if="${user.getEnabled()} != 0">Да</div>
+        </td>
+    </tr>
+</table>
+<a href="/logout">Logout</a>
+</body>
+</html>
