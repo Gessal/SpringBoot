@@ -1,5 +1,7 @@
 package springBoot.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import springBoot.model.Role;
 import springBoot.model.User;
 import springBoot.service.UserService;
@@ -22,15 +24,15 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public String admin() {
-        return "admin";
-    }
-
-    @GetMapping("/admin/users")
     public String printUsers(ModelMap model) {
         List<User> users = service.list();
         model.addAttribute("users", users);
-        return "users";
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User curUser = service.getByName(userDetails.getUsername());
+        model.addAttribute("curUser", curUser);
+
+        return "admin";
     }
 
     @PostMapping("/admin/users")
@@ -39,7 +41,7 @@ public class AdminController {
         service.delete(id);
         List<User> users = service.list();
         model.addAttribute("users", users);
-        return "users";
+        return "_users";
     }
 
     @GetMapping("/admin/update")
@@ -79,31 +81,23 @@ public class AdminController {
         service.set(user);
         List<User> users = service.list();
         model.addAttribute("users", users);
-        return "users";
+        return "admin";
     }
 
-    @GetMapping("/admin/add")
-    public String printAddUser(ModelMap model) {
-        return "add";
-    }
-
-    @PostMapping("/admin/add")
+    @PostMapping("/admin")
     public String AddUser(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password,
                           @RequestParam(name = "name") String name, @RequestParam(name = "surname") String surname,
-                          @RequestParam(name = "age") byte age, @RequestParam(name = "isUser", required = false) boolean isUser,
-                          @RequestParam(name = "isAdmin", required = false) boolean isAdmin, ModelMap model) {
+                          @RequestParam(name = "age") byte age, @RequestParam(name = "roles") List<String> rol,
+                          ModelMap model) {
         User user = new User(username, password, name, surname, age);
         List<Role> roles = new ArrayList<>();
-        if (isUser) {
-            roles.add(new Role("ROLE_USER"));
-        }
-        if (isAdmin) {
-            roles.add(new Role("ROLE_ADMIN"));
+        for (String r : rol) {
+            roles.add(new Role("ROLE_" + r));
         }
         user.setRoles(roles);
         service.add(user);
         List<User> users = service.list();
         model.addAttribute("users", users);
-        return "users";
+        return "admin";
     }
 }

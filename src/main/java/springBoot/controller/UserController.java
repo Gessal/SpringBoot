@@ -21,7 +21,7 @@ public class UserController {
     public String loginPage(ModelMap model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = service.getByName(userDetails.getUsername());
-        model.addAttribute("user", user);
-        return "user";
+        model.addAttribute("curUser", user);
+        return "admin";
     }
 }
