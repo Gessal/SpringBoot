@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
 	  			xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
@@ -17,9 +17,9 @@
     <div class="container-fluid bg-dark text-white">
       <div class="row px-3 py-2">
         <div class=col-6>
-			<h4 class="text-left"><span class="font-weight-bolder" th:text="${curUser.getUsername()}"> with roles: </span>
-				<span class="font-weight-normal" th:each="role : ${curUser.getRoles()}">
-					<r th:text="${role.getTrimRole('ROLE_')}"></r>
+			<h4 class="text-left"><span class="font-weight-bolder" th:text="${#authentication.name}"></span> with roles:
+				<span class="font-weight-normal" th:each="role : ${#authentication.authorities}">
+					<r th:text="${role.getAuthority().replace('ROLE_', '')}"></r>
 				</span>
 			</h4>
         </div>
@@ -34,14 +34,14 @@
 	<div class="row no-gutters flex">
 		<div class="col-2">
 			<div class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
-				<a th:if="${curUser.isAdmin('ROLE_')}" class="nav-link active" id="admin-tab" data-toggle="pill" href="#pill-admin" role="tab" aria-controls="pill-admin" aria-selected="true">Admin</a>
-				<a class="nav-link" th:classappend="${curUser.isAdmin('ROLE_')} ? '' : active" id="user-tab" data-toggle="pill" href="#pill-user" role="tab" aria-controls="pill-user" th:attr="aria-selected=${curUser.isAdmin('ROLE_')} ? false : true">User</a>
+				<a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link active" id="admin-tab" data-toggle="pill" href="#pill-admin" role="tab" aria-controls="pill-admin" aria-selected="true">Admin</a>
+				<a class="nav-link" th:classappend="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? '' : active" id="user-tab" data-toggle="pill" href="#pill-user" role="tab" aria-controls="pill-user" th:attr="aria-selected=${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? false : true">User</a>
 			</div>
 		</div>
 		<div class="col-10 bg-light">
 			<div class="tab-content">
 				<!--Вкладка админа-->
-				<div th:if="${curUser.isAdmin('ROLE_')}" class="tab-pane fade show active" id="pill-admin" role="tabpanel" aria-labelledby="admin-tab">
+				<div sec:authorize="hasRole('ROLE_ADMIN')" class="tab-pane fade show active" id="pill-admin" role="tabpanel" aria-labelledby="admin-tab">
 					<h1 class="p-3">Admin panel</h1>
 					<div class="container-fluid">
 						<ul class="nav nav-tabs nav-stacked">
@@ -81,7 +81,7 @@
 											<td th:text="${user.getUsername()}"></td>
 											<td>
 												<span th:each="role : ${user.getRoles()}">
-													<r th:text="${role.getTrimRole('ROLE_')}"></r>
+													<r th:text="${role.getRole().replace('ROLE_', '')}"></r>
 												</span>
 											</td>
 											<form>
@@ -309,7 +309,7 @@
 					</div>
 				</div>
 				<!--Вкладка юзера-->
-				<div class="tab-pane fade active" th:classappend="${curUser.isAdmin('ROLE_')} ? '' : show" id="pill-user" role="tabpanel" aria-labelledby="user-tab">
+				<div class="tab-pane fade active" th:classappend="${#authorization.expression('hasRole(''ROLE_ADMIN'')')} ? '' : show" id="pill-user" role="tabpanel" aria-labelledby="user-tab">
 					<h1 class="p-3">User information-page</h1>
 					<div class="container-fluid bg-white p-0 border">
 						<h4 class="p-3 border bg-light">About user</h4>
@@ -334,7 +334,7 @@
 									<td th:text="${curUser.getUsername()}"></td>
 									<td>
 										<span th:each="curRole : ${curUser.getRoles()}">
-											<r th:text="${curRole.getTrimRole('ROLE_')}"></r>
+											<r th:text="${curRole.getRole().replace('ROLE_', '')}"></r>
 										</span>
 									</td>
 								</tr>

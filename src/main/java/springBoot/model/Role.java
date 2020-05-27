@@ -38,10 +38,6 @@ public class Role implements GrantedAuthority {
         return role;
     }
 
-    public String getTrimRole(String prefix) {
-        return role.replace(prefix, "");
-    }
-
     public void setRole(String role) {
         this.role = role;
     }

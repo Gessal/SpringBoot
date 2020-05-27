@@ -148,13 +148,4 @@ public class User implements UserDetails {
     public String getUsername() {
         return username;
     }
-
-    public boolean isAdmin(String prefix) {
-        for (Role role : roles) {
-            if (role.getRole().equals(prefix + "ADMIN")) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

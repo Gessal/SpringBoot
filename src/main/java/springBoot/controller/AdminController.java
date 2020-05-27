@@ -27,11 +27,7 @@ public class AdminController {
     public String printUsers(ModelMap model) {
         List<User> users = service.list();
         model.addAttribute("users", users);
-
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User curUser = service.getByName(userDetails.getUsername());
-        model.addAttribute("curUser", curUser);
-
+        model.addAttribute("curUser", getAuthUser());
         return "admin";
     }
 
@@ -98,6 +94,12 @@ public class AdminController {
         service.add(user);
         List<User> users = service.list();
         model.addAttribute("users", users);
+        model.addAttribute("curUser", getAuthUser());
         return "admin";
+    }
+
+    private User getAuthUser() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return service.getByName(userDetails.getUsername());
     }
 }
