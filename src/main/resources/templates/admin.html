@@ -4,8 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <title>BootStrap</title>
+	<link href="webjars/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"><title>BootStrap</title>
 	<style type="text/css">
 		.flex {
 			height: 100vh;
@@ -76,23 +75,19 @@
 										<tr th:each="user : ${users}">
 											<th:block th:with="id=${user.getId()}, name=${user.getName()}, surname=${user.getSurname()},
 													  		   age=${user.getAge()}, userName=${user.getUsername()}, roles=${user.getRoles()}">
-											<td th:text="${id}"></td>
-											<td th:text="${name}"></td>
-											<td th:text="${surname}"></td>
-											<td th:text="${age}"></td>
-											<td th:text="${userName}"></td>
-											<td>
-												<span th:each="role : ${roles}">
+											<td th:id="${'id_' + id}" th:text="${id}"></td>
+											<td th:id="${'name_' + id}" th:text="${name}"></td>
+											<td th:id="${'surname_' + id}" th:text="${surname}"></td>
+											<td th:id="${'age_' + id}" th:text="${age}"></td>
+											<td th:id="${'username_' + id}" th:text="${userName}"></td>
+											<td th:id="${'roles_' + id}">
+												<span th:id="${'roles_' + id}" th:each="role : ${roles}">
 													<r th:text="${role.getRole().replace('ROLE_', '')}"></r>
 												</span>
 											</td>
 											<form>
-												<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit_modal"
-															th:data-u_id="${id}" th:data-u_name="${name}" th:data-u_surname="${surname}"
-															th:data-u_age="${age}" th:data-u_username="${userName}" data-btype="edit">Edit</button></td>
-												<td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal"
-															th:data-u_id="${id}" th:data-u_name="${name}" th:data-u_surname="${surname}"
-															th:data-u_age="${age}" th:data-u_username="${userName}" data-btype="delete">Delete</button></td>
+												<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit_modal" data-btype="edit">Edit</button></td>
+												<td><button th:id="${id}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Delete</button></td>
 											</form>
 											</th:block>
 										</tr>
@@ -257,40 +252,40 @@
 																		<div class="text-center">
 																			<h5><b>ID</b></h5>
 																		</div>
-																		<input id="du_id" type="text" class="form-control" placeholder="ID" disabled>
+																		<input id="mu_id" type="text" class="form-control" placeholder="ID" disabled>
 																	</div>
 																	<div class="form-group">
 																		<div class="text-center">
 																			<h5><b>First name</b></h5>
 																		</div>
-																		<input id="du_name" type="text" class="form-control" placeholder="First name" disabled>
+																		<input id="mu_name" type="text" class="form-control" placeholder="First name" disabled>
 																	</div>
 																	<div class="form-group">
 																		<div class="text-center">
 																			<h5><b>Last name</b></h5>
 																		</div>
-																		<input id="du_surname" type="text" class="form-control" placeholder="Last name" disabled>
+																		<input id="mu_surname" type="text" class="form-control" placeholder="Last name" disabled>
 																	</div>
 																	<div class="form-group">
 																		<div class="text-center">
 																			<h5><b>Age</b></h5>
 																		</div>
-																		<input id="du_age" type="number" class="form-control" placeholder="Age" disabled>
+																		<input id="mu_age" type="number" class="form-control" placeholder="Age" disabled>
 																	</div>
 																	<div class="form-group">
 																		<div class="text-center">
 																			<h5><b>Email</b></h5>
 																		</div>
-																		<input id="du_username" type="email" class="form-control" placeholder="Email" disabled>
+																		<input id="mu_username" type="email" class="form-control" placeholder="Email" disabled>
 																	</div>
 																	<div class="form-group">
 																		<div class="text-center">
 																			<h5><b>Role</b></h5>
 																		</div>
 																		<div style="height: 58px;">
-																			<select multiple class="form-control mh-100" disabled>
-																				<option id="u_admin">ADMIN</option>
-																				<option id="u_user">USER</option>
+																			<select id="mu_roles" multiple class="form-control mh-100" disabled>
+																				<option>ADMIN</option>
+																				<option>USER</option>
 																			</select>
 																		</div>
 																	</div>
@@ -302,7 +297,7 @@
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												<button type="submit" form="del_form"  class="btn btn-warning">Delete</button>
+												<button id="del_button" type="button"  class="btn btn-warning">Delete</button>
 											</div>
 										</div>
 									</div>
@@ -351,30 +346,8 @@
 		</div>
 	</div>
 	</div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-
-	<script>
-		$('#delete_modal').on('show.bs.modal', function (event) {
-			let button = $(event.relatedTarget)
-			$(this).find('#du_id').val(button.data('u_id'));
-			$(this).find('#hdu_id').val(button.data('u_id'));
-			$(this).find('#du_name').val(button.data('u_name'));
-			$(this).find('#du_surname').val(button.data('u_surname'));
-			$(this).find('#du_age').val(button.data('u_age'));
-			$(this).find('#du_username').val(button.data('u_username'));
-		})
-		$('#edit_modal').on('show.bs.modal', function (event) {
-			let button = $(event.relatedTarget)
-			$(this).find('#eu_id').val(button.data('u_id'));
-			$(this).find('#heu_id').val(button.data('u_id'));
-			$(this).find('#eu_name').val(button.data('u_name'));
-			$(this).find('#eu_surname').val(button.data('u_surname'));
-			$(this).find('#eu_age').val(button.data('u_age'));
-			$(this).find('#eu_username').val(button.data('u_username'));
-		})
-	</script>
-
+	<script src="webjars/jquery/3.3.1/jquery.min.js"></script>
+	<script src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="modal.js"></script>
   </body>
 </html>
