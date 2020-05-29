@@ -1,56 +1,57 @@
 package springBoot.service;
 
-import springBoot.dao.UserDao;
+import springBoot.dao.UserCrudRepository;
 import springBoot.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
+    private UserCrudRepository userCrudRepository;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserCrudRepository userCrudRepository) {
+        this.userCrudRepository = userCrudRepository;
     }
 
     @Transactional
     @Override
     public void add(User user) {
-        userDao.add(user);
+        userCrudRepository.save(user);
     }
 
     @Transactional(readOnly = true)
     @Override
     public User get(Long id) {
-        return userDao.get(id);
+        return userCrudRepository.findById(id).get();
     }
 
     @Transactional(readOnly = true)
     @Override
     public User getByName(String username) {
-        return userDao.getByUserName(username);
+        return userCrudRepository.findByUsername(username);
     }
 
     @Transactional
     @Override
     public void set(User user) {
-        userDao.set(user);
+        userCrudRepository.save(user);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        userDao.delete(id);
+        userCrudRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<User> list() {
-        return userDao.list();
+        return (List<User>) userCrudRepository.findAll();
     }
 }

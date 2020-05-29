@@ -86,8 +86,8 @@
 												</span>
 											</td>
 											<form>
-												<td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#edit_modal" data-btype="edit">Edit</button></td>
-												<td><button th:id="${id}" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Delete</button></td>
+												<td><button th:attr="num=${id}" act="upd" type="button" class="btn btn-info" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Edit</button></td>
+												<td><button th:attr="num=${id}" act="del" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Delete</button></td>
 											</form>
 											</th:block>
 										</tr>
@@ -151,92 +151,13 @@
 									</div>
 								</div>
 							</div>
-							<!--Редактирование пользователя-->
-							<div>
-								<div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="edit_modalLabel" aria-hidden="true">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="edit_modalLabel">Edit user</h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<div class="container-fluid p-0">
-													<div class="container">
-														<div class="row justify-content-center">
-															<div class="flex-col col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6">
-																<form id="edit_form" action="/admin/update" method="post">
-																	<input id="heu_id" type="hidden" name="id" value="-1">
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>ID</b></h5>
-																		</div>
-																		<input id="eu_id" type="text" class="form-control" placeholder="ID" disabled>
-																	</div>
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>First name</b></h5>
-																		</div>
-																		<input id="eu_name" name="name" type="text" class="form-control" placeholder="First name">
-																	</div>
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>Last name</b></h5>
-																		</div>
-																		<input id="eu_surname" name="surname" type="text" class="form-control" placeholder="Last name">
-																	</div>
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>Age</b></h5>
-																		</div>
-																		<input id="eu_age" type="number" name="age" class="form-control" placeholder="Age">
-																	</div>
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>Email</b></h5>
-																		</div>
-																		<input id="eu_username" type="email" name="username" class="form-control" placeholder="Email">
-																	</div>
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>Password</b></h5>
-																		</div>
-																		<input type="password" class="form-control" name="password" placeholder="Password">
-																	</div>
-																	<div class="form-group">
-																		<div class="text-center">
-																			<h5><b>Role</b></h5>
-																		</div>
-																		<div style="height: 58px;">
-																			<select multiple class="form-control mh-100" name="roles">
-																				<option>ADMIN</option>
-																				<option>USER</option>
-																			</select>
-																		</div>
-																	</div>
-																</form>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												<button type="submit" form="edit_form" class="btn btn-primary">Edit</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--Удаление пользователя-->
+							<!--Модальное окно-->
 							<div>
 								<div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="delete_modalLabel" aria-hidden="true">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
 											<div class="modal-header">
-												<h5 class="modal-title" id="delete_modalLabel">Delete user</h5>
+												<h5 th:id="head_label" class="modal-title" id="delete_modalLabel">Delete user</h5>
 												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 													<span aria-hidden="true">&times;</span>
 												</button>
@@ -278,14 +199,20 @@
 																		</div>
 																		<input id="mu_username" type="email" class="form-control" placeholder="Email" disabled>
 																	</div>
+																	<div id="password_block" class="form-group">
+																		<div class="text-center">
+																			<h5><b>Password</b></h5>
+																		</div>
+																		<input type="password" class="form-control" name="password" placeholder="Password">
+																	</div>
 																	<div class="form-group">
 																		<div class="text-center">
 																			<h5><b>Role</b></h5>
 																		</div>
 																		<div style="height: 58px;">
 																			<select id="mu_roles" multiple class="form-control mh-100" disabled>
-																				<option>ADMIN</option>
-																				<option>USER</option>
+																				<option id="u_role_admin">ADMIN</option>
+																				<option id="u_role_user">USER</option>
 																			</select>
 																		</div>
 																	</div>
@@ -297,7 +224,7 @@
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-												<button id="del_button" type="button"  class="btn btn-warning">Delete</button>
+												<button id="act_button" type="button" class="btn">Delete</button>
 											</div>
 										</div>
 									</div>
