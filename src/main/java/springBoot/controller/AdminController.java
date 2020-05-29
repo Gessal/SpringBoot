@@ -45,10 +45,12 @@ public class AdminController {
                              @RequestParam(name = "roles", required = false) String[] roles) {
         User user = new User(id, username, password, name, surname, age, (byte) 1);
         List<Role> roleList = new ArrayList<>();
-        for (String r : roles) {
-            roleList.add(new Role(r));
+        if (roles != null) {
+            for (String r : roles) {
+                roleList.add(new Role(r));
+            }
+            user.setRoles(roleList);
         }
-        user.setRoles(roleList);
         service.set(user);
         return "redirect:/admin";
     }
