@@ -14,29 +14,30 @@
     </style>
 </head>
 <body>
-<div align="center"><form method="post">
-    <table>
-        <tr> <td>Пользователь:</td> <td><input type="text" name="username" size="25" th:value="${user.getUsername()}"> </td></tr>
-        <tr> <td>Пароль:</td> <td><input type="text" name="password" size="25" th:value="${user.getPassword()}"> </td></tr>
-        <tr> <td>Имя:</td> <td><input type="text" name="name" size="25" th:value="${user.getName()}"> </td></tr>
-        <tr> <td>Фамилия:</td> <td><input type="text" name="surname" size="25" th:value="${user.getSurname()}"> </td></tr>
-        <tr> <td>Возраст:</td> <td><input type="number" name="age" size="8" th:value="${user.getAge()}"> </td></tr>
-        <tr> <td>Роли:</td><td>
-            <ul>
-                <li>
-                    Пользователь: <input type="checkbox" name="isUser" th:checked="${isUser}">
-                </li>
-                <li>
-                    Администратор: <input type="checkbox" name="isAdmin" th:checked="${isAdmin}">
-                </li>
-            </ul>
-        </td>
-        <tr> <td>Активирован:</td>
-            <td><input type="checkbox" name="isEnabled" th:checked="${user.getEnabled()} != 0">
+<div align="center">
+    <form method="post">
+        <table>
+            <tr> <td>Пользователь:</td> <td><input type="text" name="username" size="25" th:value="${user.getUsername()}"> </td></tr>
+            <tr> <td>Пароль:</td> <td><input type="text" name="password" size="25" value=""> </td></tr>
+            <tr> <td>Имя:</td> <td><input type="text" name="name" size="25" th:value="${user.getName()}"> </td></tr>
+            <tr> <td>Фамилия:</td> <td><input type="text" name="surname" size="25" th:value="${user.getSurname()}"> </td></tr>
+            <tr> <td>Возраст:</td> <td><input type="number" name="age" size="8" th:value="${user.getAge()}"> </td></tr>
+            <tr> <td>Роли:</td><td>
+                <ul>
+                    <li>
+                        Пользователь: <input type="checkbox" name="isUser" th:checked="${isUser}"> USER
+                    </li>
+                    <li>
+                        Администратор: <input type="checkbox" name="isAdmin" th:checked="${isAdmin}"> ADMIN
+                    </li>
+                </ul>
             </td>
-        </tr>
-        <input type="hidden" name="id" th:value="${user.getId()}">
-    </table>
+            <tr> <td>Активирован:</td>
+                <td><input type="checkbox" name="isEnabled" th:checked="${user.getEnabled()} != 0">
+                </td>
+            </tr>
+            <input type="hidden" name="id" th:value="${user.getId()}">
+        </table>
     <input type="submit" value="Изменить">
 </form></div>
 <a href="/logout">Logout</a>

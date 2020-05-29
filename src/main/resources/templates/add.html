@@ -23,8 +23,8 @@
         <tr> <td>Роли:</td>
             <td>
                 <ul>
-                    <li><input type="checkbox" name="isUser" checked></li>
-                    <li><input type="checkbox" name="isAdmin"></li>
+                    <li><input type="checkbox" name="isUser" checked> USER</li>
+                    <li><input type="checkbox" name="isAdmin"> ADMIN</li>
                 </ul>
             </td>
         </tr>

@@ -17,12 +17,11 @@
 <table border="1" align="center">
     <caption>Пользователи</caption>
     <tr>
-        <td align="center">Пользователь</td><td align="center">Пароль</td><td align="center">Имя</td><td>Фамилия</td><td>Возраст</td><td>Роли</td>
+        <td align="center">Пользователь</td><td align="center">Имя</td><td>Фамилия</td><td>Возраст</td><td>Роли</td>
         <td>Активен</td><td>Изменить</td><td>Удалить</td>
     </tr>
         <tr th:each="user : ${users}">
             <td th:text="${user.getUsername()}"></td>
-            <td th:text="${user.getPassword()}"></td>
             <td th:text="${user.getName()}"></td>
             <td th:text="${user.getSurname()}"></td>
             <td th:text="${user.getAge()}"></td>

@@ -35,7 +35,6 @@ public class AdminController {
 
     @PostMapping("/admin/users")
     public String deleteUser(@RequestParam(name = "id") Long id, ModelMap model) {
-        User user = service.get(id);
         service.delete(id);
         List<User> users = service.list();
         model.addAttribute("users", users);
@@ -101,6 +100,7 @@ public class AdminController {
             roles.add(new Role("ROLE_ADMIN"));
         }
         user.setRoles(roles);
+        user.setEnabled((byte) 1);
         service.add(user);
         List<User> users = service.list();
         model.addAttribute("users", users);

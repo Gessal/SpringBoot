@@ -1,4 +1,4 @@
-package springBoot.service;
+package springBoot.security;
 
 import springBoot.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package springBoot.handler;
+package springBoot.security.handler;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
