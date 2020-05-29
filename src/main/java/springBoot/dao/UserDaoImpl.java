@@ -1,5 +1,6 @@
 package springBoot.dao;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import springBoot.model.User;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void add(User user) {
         Session session = entityManager.unwrap(Session.class);
+        String password = user.getPassword();
+        user.setPassword(new BCryptPasswordEncoder().encode(password));
         session.save(user);
     }
 
@@ -48,7 +51,10 @@ public class UserDaoImpl implements UserDao {
         Session session = entityManager.unwrap(Session.class);
         User u = session.get(User.class, user.getId());
         u.setUsername(user.getUsername());
-        u.setPassword(user.getPassword());
+        String password = user.getPassword();
+        if (!(password == null) && !password.equals("")) {
+            u.setPassword(new BCryptPasswordEncoder().encode(password));
+        }
         u.setName(user.getName());
         u.setSurname(user.getSurname());
         u.setAge(user.getAge());
