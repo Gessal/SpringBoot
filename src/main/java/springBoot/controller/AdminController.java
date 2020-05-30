@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     UserService service;
@@ -23,7 +24,7 @@ public class AdminController {
         this.service = service;
     }
 
-    @GetMapping("/admin")
+    @GetMapping
     public String printUsers(ModelMap model) {
         List<User> users = service.list();
         model.addAttribute("users", users);
@@ -31,7 +32,7 @@ public class AdminController {
         return "admin";
     }
 
-    @PostMapping("/admin/delete")
+    /*@PostMapping("/admin/delete")
     public String deleteUser(@RequestParam(name = "id") Long id) {
         service.delete(id);
         return "redirect:/admin";
@@ -68,7 +69,7 @@ public class AdminController {
         model.addAttribute("users", users);
         model.addAttribute("curUser", getAuthUser());
         return "admin";
-    }
+    }*/
 
     private User getAuthUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

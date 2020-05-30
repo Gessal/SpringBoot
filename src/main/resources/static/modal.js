@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    // Кнопки отображения модального окна
     $('.btn').on('click', function() {
         let n = $(this).attr('num');
         let mu_name = $('#mu_name');
@@ -46,5 +47,35 @@ $(document).ready(function(){
             act_button.text('Delete');
             act_button.addClass('btn-danger');
         }
+    });
+
+    // Добавление пользователя
+    $('#add_button').on('click', function(event) {
+        $.post('http://localhost:8080/admin/add',
+            $('#add_user_data').serialize()).done(function (data) {
+                if (data == null) {
+                    alert('Fail while adding user.')
+                }else if (data.id === -1) {
+                    alert('User is already exist.');
+                } else {
+                    let roles = '';
+                    $.each(data.roles, function (index, value) {
+                        roles += value.role;
+                    })
+                    $('#users_table').append('<tr>' +
+                        '<td>' + data.id + '</td>' +
+                        '<td>' + data.name + '</td>' +
+                        '<td>' + data.surname + '</td>' +
+                        '<td>' + data.age + '</td>' +
+                        '<td>' + data.username + '</td>' +
+                        '<td>' + roles + '</td>' +
+                        '<form>' +
+                            '<td><button num="' + data.id + '" act="upd" type="button" class="btn btn-info" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Edit</button></td>' +
+                            '<td><button num="' + data.id + '" act="del" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Delete</button></td>' +
+                        '</form>' +
+                    '</tr>');
+                    alert('User is added.');
+                }
+        });
     });
 });
