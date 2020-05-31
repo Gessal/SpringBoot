@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void set(User user) {
-        userCrudRepository.save(user);
+    public User set(User user) {
+        return userCrudRepository.save(user);
     }
 
     @Transactional
@@ -53,5 +53,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> list() {
         return (List<User>) userCrudRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public boolean existsByName(String username) {
+        return userCrudRepository.existsByUsername(username);
     }
 }

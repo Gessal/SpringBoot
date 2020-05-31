@@ -7,8 +7,9 @@ import java.util.List;
 public interface UserService {
     User add(User user);
     User get(Long id);
-    void set(User user);
+    User set(User user);
     void delete(Long id);
     List<User> list();
     User getByName(String username);
+    boolean existsByName(String username);
 }

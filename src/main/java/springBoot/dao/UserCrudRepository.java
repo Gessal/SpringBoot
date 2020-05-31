@@ -7,5 +7,5 @@ import springBoot.model.User;
 @Repository
 public interface UserCrudRepository extends CrudRepository<User, Long> {
     User findByUsername(String username);
-    void deleteById(Long id);
+    boolean existsByUsername(String name);
 }

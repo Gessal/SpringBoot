@@ -27,7 +27,7 @@ public class AdminRestController {
                         @RequestParam("age") byte age, @RequestParam("roles") String[] roles) {
         try {
             User user = new User(username, new BCryptPasswordEncoder().encode(password), name, surname, age);
-            if (service.getByName(username) == null) {
+            if (!service.existsByName(username)) {
                 List<Role> listRoles = new ArrayList<>();
                 for (String r : roles) {
                     listRoles.add(new Role("ROLE_" + r));
@@ -50,6 +50,30 @@ public class AdminRestController {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @PostMapping("/update")
+    public User updUser(@RequestParam("id") Long id, @RequestParam("name") String name,
+                           @RequestParam("surname") String surnane, @RequestParam("age") byte age,
+                           @RequestParam("username") String username, @RequestParam(value = "password", required = false) String password,
+                           @RequestParam("roles[]") String[] roles) {
+        try {
+            if (password == null || password.equals("")) {
+                password = service.get(id).getPassword();
+            } else {
+                password = new BCryptPasswordEncoder().encode(password);
+            }
+            User user = new User(id, username, password, name, surnane, age, (byte) 1);
+            List<Role> listRoles = new ArrayList<>();
+            for (String r : roles) {
+                listRoles.add(new Role("ROLE_" + r));
+            }
+            user.setRoles(listRoles);
+            service.set(user);
+            return user;
+        } catch (Exception e) {
+            return null;
         }
     }
 }
