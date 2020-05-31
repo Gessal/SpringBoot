@@ -1,6 +1,6 @@
 $(document).ready(function(){
     // Кнопки отображения модального окна
-    $('.btn').on('click', function() {
+    $('.modal_btn').on('click', function() {
         let n = $(this).attr('num');
         let mu_name = $('#mu_name');
         let mu_surname = $('#mu_surname');
@@ -35,7 +35,10 @@ $(document).ready(function(){
             mu_username.prop('disabled', false);
             mu_roles.prop('disabled', false);
             act_button.text('Edit');
+            act_button.removeClass();
             act_button.addClass('btn-primary');
+            act_button.addClass('btn');
+            act_button.attr('act', 'edit')
         } else {
             password_block.hide();
             head_label.text('Delete user');
@@ -45,12 +48,15 @@ $(document).ready(function(){
             mu_username.prop('disabled', true);
             mu_roles.prop('disabled', true);
             act_button.text('Delete');
+            act_button.removeClass();
             act_button.addClass('btn-danger');
+            act_button.addClass('btn');
+            act_button.attr('act', 'delete')
         }
     });
 
     // Добавление пользователя
-    $('#add_button').on('click', function(event) {
+    $('#add_button').on('click', function() {
         $.post('http://localhost:8080/admin/add',
             $('#add_user_data').serialize()).done(function (data) {
                 if (data == null) {
@@ -60,7 +66,7 @@ $(document).ready(function(){
                 } else {
                     let roles = '';
                     $.each(data.roles, function (index, value) {
-                        roles += value.role;
+                        roles += value.role.replace('ROLE_', ' ');
                     })
                     $('#users_table').append('<tr>' +
                         '<td>' + data.id + '</td>' +
@@ -77,5 +83,22 @@ $(document).ready(function(){
                     alert('User is added.');
                 }
         });
+    });
+
+    // Удаление пользователя
+    $('#act_button').on('click', function() {
+        if ($(this).attr('act') === 'delete') {
+            $.post('http://localhost:8080/admin/delete',
+                {id : $('#mu_id').val()}).done(function (data) {
+                if (data === true) {
+                    $('#tr_' + $('#mu_id').val()).remove();
+                    alert('User deleted.')
+                } else {
+                    alert('Error while deleting user.');
+                }
+            });
+        } else if ($(this).attr('act') === 'edit') {
+            alert('UPDATE');
+        }
     });
 });

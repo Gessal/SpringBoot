@@ -42,4 +42,14 @@ public class AdminRestController {
             return null;
         }
     }
+
+    @PostMapping("/delete")
+    public boolean delUser(@RequestParam("id") Long id) {
+        try {
+            service.delete(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
