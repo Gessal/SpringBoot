@@ -1,9 +1,9 @@
-package springBoot.controller;
+package server.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import springBoot.model.User;
-import springBoot.service.UserService;
+import server.model.User;
+import server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

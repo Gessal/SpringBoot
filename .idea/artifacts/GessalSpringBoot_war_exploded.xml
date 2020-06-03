@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="mycoolapp:war exploded">
+  <artifact type="exploded-war" name="GessalSpringBoot:war exploded">
     <output-path>$PROJECT_DIR$/target/sprongBoot-0.0.1-SNAPSHOT</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
-        <module>mycoolapp</module>
+        <module>GessalSpringBoot</module>
         <packaging>war</packaging>
       </options>
     </properties>

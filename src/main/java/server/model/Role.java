@@ -1,4 +1,4 @@
-package springBoot.model;
+package server.model;
 
 import org.springframework.security.core.GrantedAuthority;
 

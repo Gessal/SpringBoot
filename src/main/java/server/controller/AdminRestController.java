@@ -1,11 +1,11 @@
-package springBoot.controller;
+package server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import springBoot.model.Role;
-import springBoot.model.User;
-import springBoot.service.UserService;
+import server.model.Role;
+import server.model.User;
+import server.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;

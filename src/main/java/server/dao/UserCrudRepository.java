@@ -1,8 +1,8 @@
-package springBoot.dao;
+package server.dao;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import springBoot.model.User;
+import server.model.User;
 
 @Repository
 public interface UserCrudRepository extends CrudRepository<User, Long> {

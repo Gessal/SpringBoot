@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="mycoolapp:war exploded">
-    <output-path>$PROJECT_DIR$/target/sprongBoot-0.0.1-SNAPSHOT</output-path>
+  <artifact type="exploded-war" name="server:war exploded">
+    <output-path>$PROJECT_DIR$/target/springBootServer-0.0.1-SNAPSHOT</output-path>
     <properties id="maven-jee-properties">
       <options>
         <exploded>true</exploded>
-        <module>mycoolapp</module>
+        <module>server</module>
         <packaging>war</packaging>
       </options>
     </properties>
@@ -91,9 +91,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/sprongBoot-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/springBootServer-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="Server/web/Web" />
+      <element id="javaee-facet-resources" facet="server/web/Web" />
     </root>
   </artifact>
 </component>

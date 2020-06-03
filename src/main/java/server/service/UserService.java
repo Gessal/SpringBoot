@@ -1,6 +1,6 @@
-package springBoot.service;
+package server.service;
 
-import springBoot.model.User;
+import server.model.User;
 
 import java.util.List;
 
