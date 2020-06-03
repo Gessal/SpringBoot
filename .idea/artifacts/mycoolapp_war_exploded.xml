@@ -93,7 +93,7 @@
       <element id="directory" name="META-INF">
         <element id="file-copy" path="$PROJECT_DIR$/target/sprongBoot-0.0.1-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="GessalSpringBoot/web/Web" />
+      <element id="javaee-facet-resources" facet="Server/web/Web" />
     </root>
   </artifact>
 </component>
