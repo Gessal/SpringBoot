@@ -8,7 +8,7 @@ let act_button = $('#act_button');
 let head_label = $('#head_label');
 let mu_roles = $('#mu_roles');
 
-function showModalWindow(n) {
+function showModalWindow(n, act) {
     mu_id.val($('#id_' + n).text());
     mu_name.val($('#name_' + n).text());
     mu_surname.val($('#surname_' + n).text());
@@ -24,7 +24,7 @@ function showModalWindow(n) {
             $('#u_role_user').prop('selected', true);
         }
     });
-    if ($(this).attr('act') === 'upd') {
+    if (act === 'upd') {
         password_block.show();
         head_label.text('Edit user');
         mu_name.prop('disabled', false);

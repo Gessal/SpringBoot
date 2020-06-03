@@ -2,7 +2,7 @@
 $(document).ready(function(){
     // Кнопки отображения модального окна
     $('.modal_btn').on('click', function() {
-        showModalWindow($(this).attr('num'));
+        showModalWindow($(this).attr('num'), $(this).attr('act'));
     });
 
     // Добавление пользователя
