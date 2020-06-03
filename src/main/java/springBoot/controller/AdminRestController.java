@@ -7,6 +7,7 @@ import springBoot.model.Role;
 import springBoot.model.User;
 import springBoot.service.UserService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class AdminRestController {
     @PostMapping("/add")
     public User addUser(@RequestParam("username") String username, @RequestParam("password") String password,
                         @RequestParam("name") String name, @RequestParam("surname") String surname,
-                        @RequestParam("age") byte age, @RequestParam("roles") String[] roles) {
+                        @RequestParam("age") byte age, @RequestParam("roles") String[] roles, HttpServletResponse response) {
         try {
             User user = new User(username, new BCryptPasswordEncoder().encode(password), name, surname, age);
             if (!service.existsByName(username)) {
@@ -33,23 +34,25 @@ public class AdminRestController {
                     listRoles.add(new Role("ROLE_" + r));
                 }
                 user.setRoles(listRoles);
+                response.setStatus(201);
                 return service.add(user);
             } else {
-                user.setId(-1L);
-                return user;
+                response.setStatus(406);
+                return null;
             }
         } catch (Exception e) {
+            response.setStatus(500);
             return null;
         }
     }
 
     @PostMapping("/delete")
-    public boolean delUser(@RequestParam("id") Long id) {
+    public void delUser(@RequestParam("id") Long id, HttpServletResponse response) {
         try {
             service.delete(id);
-            return true;
+            response.setStatus(202);
         } catch (Exception e) {
-            return false;
+            response.setStatus(500);
         }
     }
 
@@ -57,7 +60,7 @@ public class AdminRestController {
     public User updUser(@RequestParam("id") Long id, @RequestParam("name") String name,
                            @RequestParam("surname") String surnane, @RequestParam("age") byte age,
                            @RequestParam("username") String username, @RequestParam(value = "password", required = false) String password,
-                           @RequestParam("roles[]") String[] roles) {
+                           @RequestParam("roles[]") String[] roles, HttpServletResponse response) {
         try {
             if (password == null || password.equals("")) {
                 password = service.get(id).getPassword();
@@ -71,8 +74,10 @@ public class AdminRestController {
             }
             user.setRoles(listRoles);
             service.set(user);
+            response.setStatus(202);
             return user;
         } catch (Exception e) {
+            response.setStatus(500);
             return null;
         }
     }
