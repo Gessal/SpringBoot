@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/mycoolapp.iml" filepath="$PROJECT_DIR$/mycoolapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GessalSpringBoot.iml" filepath="$PROJECT_DIR$/GessalSpringBoot.iml" />
     </modules>
   </component>
 </project>
