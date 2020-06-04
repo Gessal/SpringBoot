@@ -43,7 +43,7 @@ public class ServerRestController {
             if (!service.existsByName(username)) {
                 List<Role> listRoles = new ArrayList<>();
                 for (String r : roles) {
-                    listRoles.add(new Role("ROLE_" + r));
+                    listRoles.add(new Role("ROLE_" + r.replace("[", "").replace("]", "")));
                 }
                 user.setRoles(listRoles);
                 response.setStatus(201);
