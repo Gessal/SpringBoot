@@ -22,6 +22,18 @@ public class AdminRestController {
         this.service = service;
     }
 
+    @GetMapping("/get")
+    public List<User> getUsers(HttpServletResponse response) {
+        try {
+            List<User> users = service.list();
+            response.setStatus(200);
+            return users;
+        } catch (Exception e) {
+            response.setStatus(500);
+            return null;
+        }
+    }
+
     @PostMapping("/add")
     public User addUser(@RequestParam("username") String username, @RequestParam("password") String password,
                         @RequestParam("name") String name, @RequestParam("surname") String surname,

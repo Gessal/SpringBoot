@@ -14,9 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("admin@mail.ru").password("$2a$10$NgJe735aLQVZxuVdwI0dheIHT18KBodLXe8H3yxr9vqvxeC1fB5u6").roles("ADMIN", "USER")
-                .and()
-                .withUser("user@mail.ru").password("$2a$10$6PNZ.ywAtVmhPlQY6iVF0enLd0qwT23VYnclqGAFrmT4wQ4mlMZBC").roles("USER");
+                .withUser("clientName").password(new BCryptPasswordEncoder().encode("clientPassword")).roles("CLIENT");
     }
 
     @Override
@@ -25,8 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/admin/**", "/user/**").hasRole("CLIENT")
                 .and()
                 .csrf().disable()
                 .formLogin().disable();
