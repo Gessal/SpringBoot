@@ -12,17 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
-public class AdminRestController {
+@RequestMapping("/server")
+public class ServerRestController {
 
     UserService service;
 
     @Autowired
-    public AdminRestController(UserService service){
+    public ServerRestController(UserService service){
         this.service = service;
     }
 
-    @GetMapping("/get")
+    @GetMapping
     public List<User> getUsers(HttpServletResponse response) {
         try {
             List<User> users = service.list();
@@ -34,7 +34,7 @@ public class AdminRestController {
         }
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public User addUser(@RequestParam("username") String username, @RequestParam("password") String password,
                         @RequestParam("name") String name, @RequestParam("surname") String surname,
                         @RequestParam("age") byte age, @RequestParam("roles") String[] roles, HttpServletResponse response) {
@@ -58,7 +58,7 @@ public class AdminRestController {
         }
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping
     public void delUser(@RequestParam("id") Long id, HttpServletResponse response) {
         try {
             service.delete(id);
@@ -68,26 +68,43 @@ public class AdminRestController {
         }
     }
 
-    @PostMapping("/update")
+    @PutMapping
     public User updUser(@RequestParam("id") Long id, @RequestParam("name") String name,
-                           @RequestParam("surname") String surnane, @RequestParam("age") byte age,
+                           @RequestParam("surname") String surname, @RequestParam("age") byte age,
                            @RequestParam("username") String username, @RequestParam(value = "password", required = false) String password,
-                           @RequestParam("roles[]") String[] roles, HttpServletResponse response) {
+                           @RequestParam("roles") String[] roles, HttpServletResponse response) {
         try {
             if (password == null || password.equals("")) {
                 password = service.get(id).getPassword();
             } else {
                 password = new BCryptPasswordEncoder().encode(password);
             }
-            User user = new User(id, username, password, name, surnane, age, (byte) 1);
+            User user = new User(id, username, password, name, surname, age, (byte) 1);
             List<Role> listRoles = new ArrayList<>();
             for (String r : roles) {
-                listRoles.add(new Role("ROLE_" + r));
+                listRoles.add(new Role("ROLE_" + r.replace("[", "").replace("]", "")));
             }
             user.setRoles(listRoles);
             service.set(user);
             response.setStatus(202);
             return user;
+        } catch (Exception e) {
+            response.setStatus(500);
+            return null;
+        }
+    }
+
+    @PostMapping("/get-user")
+    public User getUser(@RequestParam String username, HttpServletResponse response) {
+        try {
+            User user = service.getByName(username);
+            if (user != null) {
+                response.setStatus(200);
+                return user;
+            } else {
+                response.setStatus(404);
+                return null;
+            }
         } catch (Exception e) {
             response.setStatus(500);
             return null;

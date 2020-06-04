@@ -14,7 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-                .withUser("clientName").password(new BCryptPasswordEncoder().encode("clientPassword")).roles("CLIENT");
+                .withUser("admin").password(new BCryptPasswordEncoder().encode("admin")).roles("ADMIN");
     }
 
     @Override
@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/**", "/user/**").hasRole("CLIENT")
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .formLogin().disable();
