@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping(value = {"/admin", "/user"})
+public class PageController {
 
     UserService service;
 
     @Autowired
-    public AdminController(UserService service){
+    public PageController(UserService service){
         this.service = service;
     }
 
