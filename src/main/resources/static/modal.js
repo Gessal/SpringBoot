@@ -16,7 +16,7 @@ function showModalWindow(n, act) {
     mu_username.val($('#username_' + n).text());
     $('#u_role_user').prop('selected', false);
     $('#u_role_admin').prop('selected', false);
-    let u_roles = $('#roles_' + n).find('r');
+    let u_roles = $('#roles_' + n).find('span');
     u_roles.each(function () {
         if($(this).text() === 'ADMIN') {
             $('#u_role_admin').prop('selected', true);

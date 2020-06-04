@@ -81,10 +81,10 @@
 													<td th:id="${'surname_' + id}" name="surname" th:text="${surname}"></td>
 													<td th:id="${'age_' + id}" name="age" th:text="${age}"></td>
 													<td th:id="${'username_' + id}" name="username" th:text="${userName}"></td>
-													<td name="roles">
-													<span th:id="${'roles_' + id}" th:each="role : ${roles}">
-														<r th:text="${role.getRole().replace('ROLE_', '')}"></r>
-													</span>
+													<td th:id="${'roles_' + id}" name="roles">
+														<th:block th:each="role : ${roles}">
+															<span th:text="${role.getRole().replace('ROLE_', '')}"></span>
+														</th:block>
 													</td>
 													<form>
 														<td><button th:attr="num=${id}" act="upd" type="button" class="btn btn-info modal_btn" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Edit</button></td>

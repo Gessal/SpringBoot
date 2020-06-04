@@ -12,18 +12,18 @@ $(document).ready(function(){
             .done(function (data) {
                     let roles = '';
                     $.each(data.roles, function (index, value) {
-                        roles += value.role.replace('ROLE_', ' ');
+                        roles +='<span>' + value.role.replace('ROLE_', '') + '</span> ';
                     })
                     $('#users_table').append('<tr>' +
-                        '<td>' + data.id + '</td>' +
-                        '<td>' + data.name + '</td>' +
-                        '<td>' + data.surname + '</td>' +
-                        '<td>' + data.age + '</td>' +
-                        '<td>' + data.username + '</td>' +
-                        '<td>' + roles + '</td>' +
+                        '<td id="id_' + data.id + '" name="id">' + data.id + '</td>' +
+                        '<td id="name_' + data.id + '" name="name">' + data.name + '</td>' +
+                        '<td id="surname_' + data.id + '" name="surname">' + data.surname + '</td>' +
+                        '<td id="age_' + data.id + '" name="age">' + data.age + '</td>' +
+                        '<td id="username_' + data.id + '" name="username">' + data.username + '</td>' +
+                        '<td id="roles_' + data.id + '" name="roles">' + roles + '</td>' +
                         '<form>' +
-                            '<td><button num="' + data.id + '" act="upd" type="button" class="btn btn-info" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Edit</button></td>' +
-                            '<td><button num="' + data.id + '" act="del" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Delete</button></td>' +
+                            '<td><button num="' + data.id + '" act="upd" type="button" class="btn btn-info modal_btn" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Edit</button></td>' +
+                            '<td><button num="' + data.id + '" act="del" type="button" class="btn btn-danger modal_btn" data-toggle="modal" data-target="#delete_modal" data-btype="delete">Delete</button></td>' +
                         '</form>' +
                     '</tr>');
                     alert('User is added.');
@@ -56,7 +56,7 @@ $(document).ready(function(){
                 .done(function (data) {
                     let roles = '';
                     $.each(data.roles, function (index, value) {
-                        roles += value.role.replace('ROLE_', ' ');
+                        roles += '<span>' + value.role.replace('ROLE_', '') + '</span> ';
                     })
                     $('#id_' + data.id).text(data.id);
                     $('#name_' + data.id).text(data.name);
@@ -64,7 +64,7 @@ $(document).ready(function(){
                     $('#age_' + data.id).text(data.age);
                     $('#username_' + data.id).text(data.username);
                     $('#roles_' + data.id).empty();
-                    $('#roles_' + data.id).text(roles);
+                    $('#roles_' + data.id).append(roles);
                     alert('User is updated.');
                 })
                 .fail(function () {
