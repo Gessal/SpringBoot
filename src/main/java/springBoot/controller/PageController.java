@@ -2,6 +2,7 @@ package springBoot.controller;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import springBoot.model.Role;
 import springBoot.model.User;
 import springBoot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,14 @@ public class PageController {
 
     @GetMapping
     public String printUsers(ModelMap model) {
-        List<User> users = service.list();
-        model.addAttribute("users", users);
-        model.addAttribute("curUser", getAuthUser());
+        User user = getAuthUser();
+        model.addAttribute("curUser", user);
+        for (Role role : user.getRoles()) {
+            if (role.getRole().equals("ROLE_ADMIN")) {
+                List<User> users = service.list();
+                model.addAttribute("users", users);
+            }
+        }
         return "admin";
     }
 
