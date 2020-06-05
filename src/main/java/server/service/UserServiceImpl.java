@@ -21,7 +21,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public User add(User user) {
-        return userCrudRepository.save(user);
+        if (!existsByName(user.getUsername())) {
+            return userCrudRepository.save(user);
+        } else {
+            return null;
+        }
     }
 
     @Transactional(readOnly = true)

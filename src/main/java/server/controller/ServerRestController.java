@@ -40,18 +40,9 @@ public class ServerRestController {
                         @RequestParam("age") byte age, @RequestParam("roles") String[] roles, HttpServletResponse response) {
         try {
             User user = new User(username, password, name, surname, age);
-            if (!service.existsByName(username)) {
-                List<Role> listRoles = new ArrayList<>();
-                for (String r : roles) {
-                    listRoles.add(new Role("ROLE_" + r.replace("[", "").replace("]", "")));
-                }
-                user.setRoles(listRoles);
-                response.setStatus(201);
-                return service.add(user);
-            } else {
-                response.setStatus(406);
-                return null;
-            }
+            user.setRoles(parseRoles(roles));
+            response.setStatus(200);
+            return service.add(user);
         } catch (Exception e) {
             response.setStatus(500);
             return null;
@@ -62,7 +53,7 @@ public class ServerRestController {
     public void delUser(@RequestParam("id") Long id, HttpServletResponse response) {
         try {
             service.delete(id);
-            response.setStatus(202);
+            response.setStatus(200);
         } catch (Exception e) {
             response.setStatus(500);
         }
@@ -78,13 +69,9 @@ public class ServerRestController {
                 password = service.get(id).getPassword();
             }
             User user = new User(id, username, password, name, surname, age, (byte) 1);
-            List<Role> listRoles = new ArrayList<>();
-            for (String r : roles) {
-                listRoles.add(new Role("ROLE_" + r.replace("[", "").replace("]", "")));
-            }
-            user.setRoles(listRoles);
+            user.setRoles(parseRoles(roles));
             service.set(user);
-            response.setStatus(202);
+            response.setStatus(200);
             return user;
         } catch (Exception e) {
             response.setStatus(500);
@@ -107,5 +94,13 @@ public class ServerRestController {
             response.setStatus(500);
             return null;
         }
+    }
+
+    private List<Role> parseRoles(String[] roles) {
+        List<Role> result = new ArrayList<>();
+        for (String r : roles) {
+            result.add(new Role("ROLE_" + r.replace("[", "").replace("]", "")));
+        }
+        return result;
     }
 }
