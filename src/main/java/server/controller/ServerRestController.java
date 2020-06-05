@@ -39,7 +39,7 @@ public class ServerRestController {
                         @RequestParam("name") String name, @RequestParam("surname") String surname,
                         @RequestParam("age") byte age, @RequestParam("roles") String[] roles, HttpServletResponse response) {
         try {
-            User user = new User(username, new BCryptPasswordEncoder().encode(password), name, surname, age);
+            User user = new User(username, password, name, surname, age);
             if (!service.existsByName(username)) {
                 List<Role> listRoles = new ArrayList<>();
                 for (String r : roles) {
@@ -76,8 +76,6 @@ public class ServerRestController {
         try {
             if (password == null || password.equals("")) {
                 password = service.get(id).getPassword();
-            } else {
-                password = new BCryptPasswordEncoder().encode(password);
             }
             User user = new User(id, username, password, name, surname, age, (byte) 1);
             List<Role> listRoles = new ArrayList<>();
